@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link href="style.css" rel="style">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></head>
+<body>
+    <div class="container py-5">
+        <h1 class="mb-4 text-center">Pankūku kafejnīca</h1>
+
+        <section class="mb-5">
+            <h2>Atjaunot izejvielu noliktavu</h2>
+            <form id="update-ingredients-form" class="row gy-2 gx-3 align-items-center">
+                <div class="col-auto">
+                    <label for="eggs" class="visually-hidden">Olgas:</label>
+                    <input type="number" class="form-control" id="eggs" placeholder="Olas" required>
+                </div>
+                <div class="col-auto">
+                    <label for="flour" class="visually-hidden">Milti (g):</label>
+                    <input type="number" class="form-control" id="flour" placeholder="Milti (g)" required>
+                </div>
+                <div class="col-auto">
+                    <label for="oil" class="visually-hidden">Eļļa (g):</label>
+                    <input type="number" class="form-control" id="oil" placeholder="Eļļa (g)" required>
+                </div>
+                <div class="col-auto">
+                    <label for="milk" class="visually-hidden">Piens (ml):</label>
+                    <input type="number" class="form-control" id="milk" placeholder="Piens (ml)" required>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Atjaunot</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="mb-5">
+            <h2>Pankūka ducis</h2>
+            <form id="add-pancakes-form" class="row gy-2 gx-3 align-items-center">
+                <div class="col-auto">
+                    <label for="batch-date" class="visually-hidden">Datums:</label>
+                    <input type="date" class="form-control" id="batch-date" required>
+                </div>
+                <div class="col-auto">
+                    <label for="batches-made" class="visually-hidden">Pankūku skaits:</label>
+                    <input type="number" class="form-control" id="batches-made" placeholder="1 ducis= 12 pankukas" required>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-success">Pievienot</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="mb-5">
+            <h2>Šobrīdējā izejvielu noliktava</h2>
+            <div class="table-responsive">
+                <table id="ingredients-table" class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Olas</th>
+                            <th>Milti (g)</th>
+                            <th>Eļļa (g)</th>
+                            <th>Piens (ml)</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>Izceptās pankūkas</h2>
+            <button id="download-csv">Lejupielādēt kā CSV</button>
+
+            <div class="table-responsive">
+                <table id="pancake-batches-table" class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Datums</th>
+                            <th>Izceptās Pankūku ducis</th>
+                            <th>izmantotās olas</th>
+                            <th>izmantotie milti (g)</th>
+                            <th>izmantotā eļļa (g)</th>
+                            <th>izmantotais piens (ml)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>
