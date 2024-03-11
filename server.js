@@ -15,6 +15,15 @@ app.use(cors());
 
 db.serialize(() => {
   db.run(`
+    CREATE TABLE IF NOT EXISTS Ingredients (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      eggs INTEGER NOT NULL,
+      flour INTEGER NOT NULL,
+      oil INTEGER NOT NULL,
+      milk INTEGER NOT NULL
+    );`
+  );
+  db.run(`
     CREATE TABLE IF NOT EXISTS PancakeBatches (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       date TEXT NOT NULL,
