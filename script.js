@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const date = document.getElementById('batch-date').value;
         const batchesMade = parseInt(document.getElementById('batches-made').value, 10);
-
+    
         fetch('http://localhost:5000/add-pancakes', {
             method: 'POST',
             headers: {
@@ -41,16 +41,21 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({ date, batchesMade }),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Nav pietiekami izejvielu noliktavā');
+            }
+            return response.json();
+        })
         .then(data => {
             alert("Pankukas pievienotas");
             fetchAndDisplayPancakeBatches();
         })
         .catch((error) => {
-            console.error('Error:', error);
+            alert(error.message);
         });
     });
-
+    
     
     document.getElementById('pancake-batches-table').addEventListener('click', function(event) {
         if (event.target && event.target.nodeName == "BUTTON" && event.target.classList.contains('delete-pancake-batch')) {
