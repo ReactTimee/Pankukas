@@ -75,9 +75,9 @@ app.post("/update-ingredients", (req, res) => {
 app.post("/add-pancakes", (req, res) => {
   const { date, batchesMade } = req.body;
   const eggsNeeded = 2 * batchesMade;
-  const flourNeeded = 100 * batchesMade; 
-  const oilNeeded = 15 * batchesMade; 
-  const milkNeeded = 300 * batchesMade; 
+  const flourNeeded = 100 * batchesMade;
+  const oilNeeded = 15 * batchesMade;
+  const milkNeeded = 300 * batchesMade;
 
   db.get(`SELECT * FROM Ingredients LIMIT 1`, [], (err, row) => {
     if (err) {
@@ -87,13 +87,13 @@ app.post("/add-pancakes", (req, res) => {
 
     if (row && row.eggs >= eggsNeeded && row.flour >= flourNeeded && row.oil >= oilNeeded && row.milk >= milkNeeded) {
       const updateQuery = `UPDATE Ingredients SET eggs = eggs - ?, flour = flour - ?, oil = oil - ?, milk = milk - ? WHERE id = ?`;
-      db.run(updateQuery, [eggsNeeded, flourNeeded, oilNeeded, milkNeeded, row.id], function(err) {
+      db.run(updateQuery, [eggsNeeded, flourNeeded, oilNeeded, milkNeeded, row.id], function (err) {
         if (err) {
           console.error(err.message);
           return res.status(500).json({ error: err.message });
         }
         const insertBatchQuery = `INSERT INTO PancakeBatches (date, batchesMade, eggsUsed, flourUsed, oilUsed, milkUsed) VALUES (?, ?, ?, ?, ?, ?)`;
-        db.run(insertBatchQuery, [date, batchesMade, eggsNeeded, flourNeeded, oilNeeded, milkNeeded], function(err) {
+        db.run(insertBatchQuery, [date, batchesMade, eggsNeeded, flourNeeded, oilNeeded, milkNeeded], function (err) {
           if (err) {
             console.error(err.message);
             return res.status(500).json({ error: err.message });
@@ -101,7 +101,16 @@ app.post("/add-pancakes", (req, res) => {
           res.status(201).json({ message: "Pancake batch added successfully and ingredients deducted" });
         });
       });
-    } 
+    } else {
+      let missingIngredients = [];
+      if (row.eggs < eggsNeeded) missingIngredients.push('eggs');
+      if (row.flour < flourNeeded) missingIngredients.push('flour');
+      if (row.oil < oilNeeded) missingIngredients.push('oil');
+      if (row.milk < milkNeeded) missingIngredients.push('milk');
+
+      const missingString = missingIngredients.join(', ');
+      res.status(400).json({ error: `Nav pietiekami: ${missingString}.` });
+    }
   });
 });
 app.delete("/delete-pancake-batch/:id", (req, res) => {
